@@ -2,11 +2,14 @@ import { propiedades_alquiler, propiedades_venta } from "./propiedades.js";
 
 const $ = document;
 
-const contenedor_venta = $.querySelector('#venta > div');
-const contenedor_alquiler = $.querySelector('#alquiler > div');
+export const contenedor_venta = $.querySelector('#venta > div');
+export const contenedor_alquiler = $.querySelector('#alquiler > div');
 
-for (let item of propiedades_venta) {
-    contenedor_venta.innerHTML += `
+
+
+export function renderCards(contenedor, informacion) {
+   for( let item of informacion){
+    contenedor.innerHTML += `
     <div class="col-md-4 mb-4">
             <div class="card">
               <img
@@ -26,13 +29,19 @@ for (let item of propiedades_venta) {
                   Prestige Suburb, CA 45678
                 </p>
                 <p>
-                  <i class="fas fa-bed"></i> 4 Habitaciones |
-                  <i class="fas fa-bath"></i> 4 Baños
+                  <i class="fas fa-bed"></i> ${item.habitaciones} |
+                  <i class="fas fa-bath"></i> ${item.banos}
                 </p>
-                <p><i class="fas fa-dollar-sign"></i> 5.000</p>
-                <p class="text-danger">
-                  <i class="fas fa-smoking-ban"></i> No se permite fumar
-                </p>
+                <p><i class="fas fa-dollar-sign"></i> ${item.costo}</p>
+                ${
+                  item.smoke ? `<p class="text-success">
+                  <i class="fas fa-smoking-ban"></i> Si se permite fumar
+                </p>` 
+                : 
+                `<p class="text-danger">
+                <i class="fas fa-smoking-ban"></i> No se permite fumar
+              </p>`
+                }
                 <p class="text-danger">
                   <i class="fa-solid fa-ban"></i> No se permiten mascotas
                 </p>
@@ -40,4 +49,7 @@ for (let item of propiedades_venta) {
             </div>
           </div>
     `
+  }
 }
+renderCards(contenedor_alquiler, propiedades_alquiler.splice(0,3))
+renderCards(contenedor_venta, propiedades_venta.splice(0,3))
